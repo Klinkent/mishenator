@@ -1,8 +1,8 @@
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const fs = require("fs");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 function generateHtmlPlugins(templateDir) {
   const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
@@ -39,11 +39,6 @@ module.exports = {
         },
       },
       {
-        test: /\.html$/,
-        include: path.resolve(__dirname, "src/html/includes"),
-        use: ["raw-loader"],
-      },
-      {
         test: /\.(sass|scss)$/,
         include: path.resolve(__dirname, "src/scss"),
         use: ExtractTextPlugin.extract({
@@ -52,12 +47,9 @@ module.exports = {
               loader: "css-loader",
               options: {
                 sourceMap: true,
-                minimize: true, //,
-                //url: false,
+                minimize: true,
+                url: false,
               },
-            },
-            {
-              loader: "resolve-url-loader",
             },
             {
               loader: "sass-loader",
@@ -69,17 +61,17 @@ module.exports = {
         }),
       },
       {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: { name: "img/[name].[ext]" },
-          },
-        ],
+        test: /\.html$/,
+        include: path.resolve(__dirname, "src/html/includes"),
+        use: ["raw-loader"],
       },
     ],
   },
   plugins: [
+    new ExtractTextPlugin({
+      filename: "./css/style.bundle.css",
+      allChunks: true,
+    }),
     new CopyWebpackPlugin([
       {
         from: "./src/fonts",
@@ -98,10 +90,5 @@ module.exports = {
         to: "./uploads",
       },
     ]),
-
-    new ExtractTextPlugin({
-      filename: "./css/style.bundle.css",
-      allChunks: true,
-    }),
   ].concat(htmlPlugins),
 };
