@@ -1,8 +1,11 @@
 const path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const fs = require("fs");
+const loader = require("sass-loader");
 
 function generateHtmlPlugins(templateDir) {
   const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
@@ -41,24 +44,18 @@ module.exports = {
       {
         test: /\.(sass|scss)$/,
         include: path.resolve(__dirname, "src/scss"),
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                sourceMap: true,
-                minimize: true,
-                url: false,
-              },
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              sourceMap: true,
+              url: false,
+              reloadAll: true,
             },
-            {
-              loader: "sass-loader",
-              options: {
-                sourceMap: true,
-              },
-            },
-          ],
-        }),
+          },
+          "css-loader",
+          "sass-loader",
+        ],
       },
       {
         test: /\.html$/,
@@ -68,27 +65,28 @@ module.exports = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: "./css/style.bundle.css",
-      allChunks: true,
     }),
-    new CopyWebpackPlugin([
-      {
-        from: "./src/fonts",
-        to: "./fonts",
-      },
-      {
-        from: "./src/favicon",
-        to: "./favicon",
-      },
-      {
-        from: "./src/img",
-        to: "./img",
-      },
-      {
-        from: "./src/uploads",
-        to: "./uploads",
-      },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "./src/fonts",
+          to: "./fonts",
+        },
+        {
+          from: "./src/favicon",
+          to: "./favicon",
+        },
+        {
+          from: "./src/img",
+          to: "./img",
+        },
+        {
+          from: "./src/uploads",
+          to: "./uploads",
+        },
+      ],
+    }),
   ].concat(htmlPlugins),
 };
