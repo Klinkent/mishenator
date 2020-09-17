@@ -115,6 +115,7 @@ header {
 }
 
 .container__product {
+  margin-bottom: 30px;
 }
 
 .container__product-label {
@@ -139,5 +140,92 @@ header {
 
   & :hover {
     background-color: #56c3b2;
+  }
+}
+
+.container__daily-leader {
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+
+  h2 {
+    margin-bottom: 30px;
+  }
+
+  p {
+    color: #444444;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  .properties {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .properties__color {
+    display: flex;
+    border-bottom: 1px solid #ececec;
+    justify-content: space-between;
+  }
+  .properties__diameter {
+    display: flex;
+    border-bottom: 1px solid #ececec;
+    justify-content: space-between;
+  }
+  .properties__height {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.card__price {
+  color: #444444;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 24px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+h2 {
+  color: #63d1bb;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+/** Classic Button */
+
+button {
+  width: 260px;
+  height: 52px;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20px;
+  background-color: #ffffff;
+  border: 2px solid #444444;
+}
+
+.container__reviews-arrows {
+  width: 260px;
+  display: flex;
+
+  & button {
+    width: 130px;
+    border: 1px solid #ececec;
+
+    img {
+      margin: 0 auto;
+    }
   }
 }
