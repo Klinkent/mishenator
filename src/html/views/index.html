@@ -1,11 +1,23 @@
 <% var data = {
-  title: "Заголовок | Проект",
-  author: "Harrix"
+  title: "MISHKA",
+  author: "Lesya"
 }; %>
 <%= _.template(require('./../includes/header.html'))(data) %>
 
 <div class="container">
-  <p>Первая страница.</p>
+  <div class="container__hero">
+    <p>Милые штучки ручной работы для дома</p>
+  </div>
+  <div class="container__product">
+    <div class="container__product-label">
+      <p>Предметы интерьера</p>
+      <img src='../../img/icon-interior.svg'>
+    </div>
+    <div class='container__product-label'>
+      <p>Детские игрушки</p>
+      <img src='../../img/icon-toy.svg'>
+    </div>
+  </div>
 </div>
 
 <%= _.template(require('./../includes/footer.html'))(data) %>
